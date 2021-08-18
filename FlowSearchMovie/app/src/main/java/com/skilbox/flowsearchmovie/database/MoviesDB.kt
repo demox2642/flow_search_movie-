@@ -6,7 +6,6 @@ import androidx.room.TypeConverters
 import com.skilbox.flowsearchmovie.RemoteMovie
 import com.skilbox.flowsearchmovie.RemoteMovieDao
 import com.skilbox.flowsearchmovie.database.MoviesDB.Companion.DB_VERSION
-import com.skilbox.shopdb.database.PurchaseBigDecimalConverter
 import com.skilbox.shopdb.database.PurchaseDateConverter
 
 @Database(

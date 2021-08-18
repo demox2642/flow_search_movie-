@@ -34,7 +34,7 @@ class MoviesRepository {
     }
 
     suspend fun loadMoviesToDB(movies: List<RemoteMovie>) {
-        Log.e("Load movies", "${remoteMovieDao.getRemoteMovie()?.toString()}")
+
         remoteMovieDao.insertRemoteMovie(movies)
     }
 
@@ -61,17 +61,13 @@ class MoviesRepository {
                 RemoteMovie(id = id, title = title, year = year, type = type, poster = poster)
             }
             errorMassage = ""
-            Log.e("parseMovieResponse", "$movieList")
+
             return moviesList
         } catch (e: JSONException) {
-            Log.e("Server jsonObject", "Ответ с сервера не корректный = ${e.message}", e)
+
             errorMassage = e.message.toString()
             return emptyList()
         }
-    }
-
-    fun getErrorMassage(): String {
-        return errorMassage
     }
 
     fun observeMovies(): Flow<Flow<List<RemoteMovie>>> {

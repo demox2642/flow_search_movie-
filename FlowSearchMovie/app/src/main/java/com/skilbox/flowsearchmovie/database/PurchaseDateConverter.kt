@@ -10,7 +10,6 @@ class PurchaseDateConverter {
         return date?.toString()
     }
 
-
     @TypeConverter
     fun convertStringToDate(string: String?): Instant? {
         return if (string == null) {
@@ -19,5 +18,4 @@ class PurchaseDateConverter {
             Instant.parse(string)
         }
     }
-
 }

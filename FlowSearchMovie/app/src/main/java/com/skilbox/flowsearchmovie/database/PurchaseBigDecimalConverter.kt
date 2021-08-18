@@ -1,4 +1,4 @@
-package com.skilbox.shopdb.database
+package com.skilbox.flowsearchmovie.database
 
 import androidx.room.TypeConverter
 import java.math.BigDecimal

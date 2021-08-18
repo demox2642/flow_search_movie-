@@ -1,6 +1,5 @@
 package com.skilbox.flowsearchmovie.vm
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -50,7 +49,6 @@ class MovieViewModel : ViewModel() {
             .debounce(500)
             .distinctUntilChanged()
             .onEach {
-                Log.e("VM Search", "search $it")
 
                 isLoadingLiveData.postValue(true)
             }
@@ -62,25 +60,21 @@ class MovieViewModel : ViewModel() {
             .flowOn(Dispatchers.IO)
             .onEach { it ->
                 isLoadingLiveData.value = false
-                Log.e("Error", "i'm in onEach")
+
                 Database.instance.withTransaction {
                     repository.loadMoviesToDB(it)
                 }
 
-                Log.e("VM Search on Ech", "search $it")
                 movieListLiveData.postValue(it)
-                Log.e("VM Search on Ech", "I'm hear movieListLiveData=${movieListLiveData.value?.size}")
             }
             .catch { it ->
-                Log.e("Error start", "I'm hear movieListLiveData=${movieList.value?.size}")
+
                 if (it !is SocketTimeoutException || it !is UnknownHostException) {
                     isLoadingLiveData.postValue(false)
                     Database.instance.withTransaction {
                         movieListLiveData.postValue(repository.getMovie(title, type))
                     }
                 }
-                Log.e("Error end 2", "I'm hear movieListLiveData=${movieList.value?.size}")
-                Log.e("Error", "$it")
             }
             .launchIn(viewModelScope)
     }
